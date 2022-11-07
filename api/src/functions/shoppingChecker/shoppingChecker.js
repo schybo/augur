@@ -32,7 +32,7 @@ async function sendTestEmail(emailAddress) {
 
   for (const [key, value] of Object.entries(cResults)) {
     text = text + value + '\n\n'
-    html = html + value + '\n\n'
+    html = html + value + '<br><br>'
   }
 
   return sendEmail({ to: emailAddress, subject, text, html })
