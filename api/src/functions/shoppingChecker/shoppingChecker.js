@@ -23,14 +23,18 @@ async function sendTestEmail(emailAddress) {
   const cResults = await augur()
 
   const subject = 'Test Email'
-  const text =
+  let text =
     'This is a manually triggered test email.\n\n' +
-    'It was sent from a RedwoodJS application.\n\n' +
-    `Number of Castelli Small Bibs: ${cResults}`
-  const html =
+    'It was sent from a RedwoodJS application.\n\n'
+  let html =
     'This is a manually triggered test email.<br><br>' +
-    'It was sent from a RedwoodJS application.<br><br>' +
-    `Number of Castelli Small Bibs: ${cResults}`
+    'It was sent from a RedwoodJS application.<br><br>'
+
+  for (const [key, value] of Object.entries(cResults)) {
+    text = text + value + '\n\n'
+    html = html + value + '\n\n'
+  }
+
   return sendEmail({ to: emailAddress, subject, text, html })
 }
 
