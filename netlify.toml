@@ -21,4 +21,4 @@ functions = "api/dist/functions"
   status = 200
 
 [functions."shoppingChecker"]
-schedule = "@hourly"
+schedule = "@daily"

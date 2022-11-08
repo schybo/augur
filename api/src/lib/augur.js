@@ -23,11 +23,15 @@ export const augur = async () => {
   )
 
   // console.log(result.data)
-  console.log(result.data.results.length)
+  let numberOfResults = result.data.results.length
 
-  dataResults[
-    'castelliBibs'
-  ] = `Number of XS Bibs that are not Castelli: ${result.data.results.length}`
+  dataResults['castelliBibs'] = {
+    message: `Number of XS Bibs that are not Castelli: ${numberOfResults}`,
+    size: 'S',
+    brand: 'Castelli',
+    garmentType: 'Bib',
+    numberOfResults: numberOfResults,
+  }
 
   // # Other XS Bib results #
   // # #################### #
@@ -45,11 +49,16 @@ export const augur = async () => {
     `${baseUrl}&userId=${userId}&domain=${collectionsBaseUrl}${collection}&resultsFormat=native&method=search&format=json&resultLayout=grid&resultsPerPage=48&facebook=0&intellisuggest=1${size}${manufacturer}${categoryHierarchy}${bgCategoryHierarchy}`
   )
   let castelliXsBibs = result.data.results.length
+  numberOfResults = allXsBibs - castelliXsBibs
 
   // print(f'Number of XS Bibs that are not Castelli: {all_xs_bibs - castelli_xs_bibs}')
-  dataResults['nonCastelliBibs'] = `Number of XS Bibs that are not Castelli: ${
-    allXsBibs - castelliXsBibs
-  }`
+  dataResults['nonCastelliBibs'] = {
+    message: `Number of XS Bibs that are not Castelli: ${numberOfResults}`,
+    size: 'XS',
+    brand: 'Other',
+    garmentType: 'Bib',
+    numberOfResults: numberOfResults,
+  }
 
   // # Castelli Medium Jerseys #
   // # ####################### #
@@ -63,9 +72,13 @@ export const augur = async () => {
   )
   let castelliMJerseys = result.data.results.length
 
-  dataResults[
-    'castelliMJerseys'
-  ] = `Number of Castelli Medium Jerseys: ${castelliMJerseys}`
+  dataResults['castelliMJerseys'] = {
+    message: `Number of Castelli Medium Jerseys: ${castelliMJerseys}`,
+    size: 'M',
+    brand: 'Castelli',
+    garmentType: 'Jersey',
+    numberOfResults: castelliMJerseys,
+  }
 
   // # Other Small Jerseys #
   // # ################### #
@@ -83,10 +96,15 @@ export const augur = async () => {
     `${baseUrl}&userId=${userId}&domain=${collectionsBaseUrl}${collection}&resultsFormat=native&method=search&format=json&resultLayout=grid&resultsPerPage=48&facebook=0&intellisuggest=1${size}${manufacturer}${categoryHierarchy}${bgCategoryHierarchy}`
   )
   let castelliSJerseys = result.data.results.length
+  numberOfResults = allSJerseys - castelliSJerseys
 
-  dataResults['allSJerseys'] = `Number of S Bibs that are not Castelli: ${
-    allSJerseys - castelliSJerseys
-  }`
+  dataResults['allSJerseys'] = {
+    message: `Number of S Bibs that are not Castelli: ${numberOfResults}`,
+    size: 'S',
+    brand: 'Other',
+    garmentType: 'Jersey',
+    numberOfResults: numberOfResults,
+  }
 
   // # Castelli Medium Jackets #
   // # ####################### #
@@ -101,9 +119,13 @@ export const augur = async () => {
   )
   let castelliMJackets = result.data.results.length
 
-  dataResults[
-    'castelliMJackets'
-  ] = `Number of Castelli Medium Jackets: ${castelliMJackets}`
+  dataResults['castelliMJackets'] = {
+    message: `Number of Castelli Medium Jackets: ${castelliMJackets}`,
+    size: 'M',
+    brand: 'Castelli',
+    garmentType: 'Jacket',
+    numberOfResults: castelliMJackets,
+  }
 
   // # Other Small Jackets #
   // # ################### #
@@ -121,12 +143,15 @@ export const augur = async () => {
     `${baseUrl}&userId=${userId}&domain=${collectionsBaseUrl}${collection}&resultsFormat=native&method=search&format=json&resultLayout=grid&resultsPerPage=48&facebook=0&intellisuggest=1${size}${manufacturer}${categoryHierarchy}${bgCategoryHierarchy}`
   )
   let castelliSJackets = result.data.results.length
+  numberOfResults = allSJackets - castelliSJackets
 
-  dataResults[
-    'otherSJackets'
-  ] = `Number of Small Jackets that are not Castelli: ${
-    allSJackets - castelliSJackets
-  }`
+  dataResults['otherSJackets'] = {
+    message: `Number of Small Jackets that are not Castelli: ${numberOfResults}`,
+    size: 'S',
+    brand: 'Other',
+    garmentType: 'Jacket',
+    numberOfResults: numberOfResults,
+  }
 
   return dataResults
 }

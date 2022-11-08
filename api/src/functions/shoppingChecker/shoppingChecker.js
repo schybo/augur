@@ -1,4 +1,5 @@
 import { augur } from 'src/lib/augur'
+import { db } from 'src/lib/db'
 import { sendEmail } from 'src/lib/email'
 import { logger } from 'src/lib/logger'
 
@@ -31,8 +32,35 @@ async function sendTestEmail(emailAddress) {
     'It was sent from a RedwoodJS application.<br><br>'
 
   for (const [key, value] of Object.entries(cResults)) {
-    text = text + value + '\n\n'
-    html = html + value + '<br><br>'
+    const { message, size, brand, garmentType, numberOfResults } = value
+
+    const previousGarmentResult = await db.garmentCheck.findFirst({
+      where: { size, brand, garmentType },
+      orderBy: {
+        id: 'desc',
+      },
+    })
+
+    let changeInResults = numberOfResults
+
+    if (previousGarmentResult) {
+      changeInResults = changeInResults - previousGarmentResult.numberOfResults
+    }
+
+    let emailMessage = `Number of ${size} ${brand} ${garmentType} since last check: ${changeInResults}`
+
+    text = text + emailMessage + '\n\n'
+    html = html + emailMessage + '<br><br>'
+
+    await db.garmentCheck.create({
+      data: {
+        message,
+        numberOfResults,
+        size,
+        brand,
+        garmentType,
+      },
+    })
   }
 
   return sendEmail({ to: emailAddress, subject, text, html })
